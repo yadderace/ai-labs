@@ -1,0 +1,55 @@
+\documentclass{LSkill}  % use the custom class
+
+% Load extra packages you might need
+\usepackage{amsmath}   % for math
+\usepackage{graphicx}  % for images
+\usepackage{hyperref}  % for clickable links
+\usepackage{url}       % for proper URL formatting
+\usepackage{tocloft}   % for customizing table of contents
+
+% Add dot leaders to TOC
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}  % for sections
+\renewcommand{\cftsubsecleader}{\cftdotfill{\cftdotsep}}  % for subsections
+
+\begin{document}
+
+% Defining the title, author and date
+\title{%
+    \Huge\bfseries Negamax \\[0.5em]
+    \large\mdseries Artificial Intelligence Algorithms
+}
+\author{Yadder Aceituno}
+\date{\today}
+
+% Creating the title page
+\maketitle 
+
+% Defining my abstract
+\begin{abstract}
+This is my abstract
+\end{abstract}
+
+% Add table of contents
+\tableofcontents
+
+\section{Introduction}
+This paper aims to briefly and simply describe the negamax algorithm \footnote{\label{fn:negamax}The paper has been compiled using the following Wikipedia page: \url{https://en.wikipedia.org/wiki/Negamax}}, which is a variant of the min-max algorithm. 
+Negamax provides a more simplified implementation of the min-max algorithm by using a single player perspective. 
+With this simplification, the algorithm clarifies the principle that one player's gain is the other player's loss.
+
+In the following sections is described the theoretical background of the algorithm and its relation with the min-max algorithm. Then, the implementation is described and some common optimizations are discussed. Finally, some applications in adversarial search are presented that make use of the negamax algorithm. 
+
+\section{Theoretical Background}
+Talking about the theoretical background
+
+\section{Algorithm}
+Talking about the algorithm
+
+\section{Applications}
+Talking about applications
+
+\bibliographystyle{plain}   
+\bibliography{references}   
+
+
+\end{document}
