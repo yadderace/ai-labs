@@ -1,7 +1,3 @@
-<div style="display: flex; justify-content: space-between;">
-
-<div style="width: 48%;">
-
 # Getting to Know the Data
 
 ## Data
@@ -45,9 +41,6 @@ Value that occurs most frequently
 * **Variance**: $\sigma^2 = \frac{1}{N} \sum_{i=1}^{N} (x_i - \mu)^2$
 * **Standard Deviation**: $\sigma = \sqrt{\sigma^2}$
 
-</div>
-
-<div style="width: 48%;">
 
 ## Data Characteristics
 * **Dimensionality**: Number of variables/features. The curse of dimensionality refers to the exponential increase in data required to densely populate space as the dimension increases.
@@ -81,7 +74,3 @@ Value that occurs most frequently
 2. Transform (log, square root)
 3. Use robust statistics (median, IQR)
 4. Cap/floor extreme values
-
-</div>
-
-</div>
