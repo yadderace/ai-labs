@@ -1,0 +1,107 @@
+\documentclass[10pt,oneside]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage[margin=0.8in]{geometry}
+\usepackage{mdframed}
+\usepackage{xcolor}
+\usepackage[bookmarks=true,pdfstartview=FitH,hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{tocloft}
+\usepackage{titlesec}
+
+% Add dots to TOC
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+
+% Add TOC to bookmarks
+\makeatletter
+\renewcommand{\tableofcontents}{%
+    \if@twocolumn
+        \@restonecoltrue\onecolumn
+    \else
+        \@restonecolfalse
+    \fi
+    \section*{\contentsname
+        \@mkboth{%
+           \MakeUppercase\contentsname}{\MakeUppercase\contentsname}}%
+    \@starttoc{toc}%
+    \if@restonecol\twocolumn\fi
+}
+\makeatother
+
+% Custom colors
+\definecolor{lecturebg}{RGB}{240, 248, 255}
+\definecolor{lecturetitle}{RGB}{0, 51, 102}
+
+% Page style
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Data Mining - Lecture Notes}
+\lfoot{\today}
+\rfoot{Page \thepage\ of \pageref{LastPage}}
+
+% Lecture environment
+\newenvironment{lecture}[1]{
+    \begin{mdframed}[backgroundcolor=lecturebg,linecolor=lecturetitle,linewidth=2pt,roundcorner=10pt,innerleftmargin=15,innerrightmargin=15,innertopmargin=15,innerbottommargin=15]
+    \section*{\color{lecturetitle}#1}
+    \vspace{-10pt}
+    \hrule
+    \vspace{10pt}
+}{\end{mdframed}\vspace{20pt}}
+
+\title{\textbf{Data Mining - Lecture Notes}}
+\author{Maastricht University}
+\date{\today}
+
+\begin{document}
+
+% Title and TOC on the same page
+\begin{titlepage}
+    \centering
+    \vspace*{1cm}
+    {\Huge\bfseries Data Mining - Lecture Notes\par}
+    \vspace{0.5cm}
+    {\Large Maastricht University\par}
+    \vspace{0.5cm}
+    {\large \today\par}
+    
+    \vspace{2cm}
+    \tableofcontents
+    \thispagestyle{empty}
+\end{titlepage}
+
+% Start page numbering after the title page
+\setcounter{page}{1}
+
+% Lecture 2
+\section{Getting to Know the Data}
+\label{sec:lecture2}
+\begin{lecture}{Lecture 2: Getting to Know the Data}
+\input{lecture2.tex}
+\end{lecture}
+
+% Lecture 3
+\section{Data Preprocessing}
+\label{sec:lecture3}
+\begin{lecture}{Lecture 3: Data Preprocessing}
+\input{lecture3.tex}
+\end{lecture}
+
+% Lecture 4
+\section{Regression}
+\label{sec:lecture4}
+\begin{lecture}{Lecture 4: Regression}
+\input{lecture4.tex}
+\end{lecture}
+
+% Lecture 5
+\section{Classification}
+\label{sec:lecture5}
+\begin{lecture}{Lecture 5: Classification}
+\input{lecture5.tex}
+\end{lecture}
+
+\end{document}

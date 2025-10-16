@@ -1,0 +1,97 @@
+\subsection*{Data}
+Data objects are described by variables. A variable V represents a property or characteristic of an object that may vary, either from one object to another or from one time to another.
+
+\subsubsection*{Variable Definition}
+A variable V is a quadruple $\langle$Name, Domain, Operations, Scale$\rangle$:
+\begin{itemize}[noitemsep]
+    \item \textbf{Name}: The name of V
+    \item \textbf{Domain}: The set of values of V
+    \item \textbf{Operations}: The set of operations allowed over Domain
+    \item \textbf{Scale}: A rule that associates a value from Domain for the variable V when it represents an object o.
+\end{itemize}
+
+\subsection*{Types of Data}
+\begin{itemize}[noitemsep]
+    \item Record Based Data (Transactions)
+    \item Graph Based Data (WWW)
+    \item Ordered Data (Genomics)
+\end{itemize}
+
+\subsection*{Measuring Data}
+\subsubsection*{Mean}
+\begin{itemize}[noitemsep]
+    \item Population Mean: $\mu = \frac{1}{N} \sum_{i=1}^{N} x_i$
+    \item Sample Mean: $\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i$
+    \item Weighted Mean: $\bar{x} = \frac{\sum_{i=1}^{n} w_i x_i}{\sum_{i=1}^{n} w_i}$
+\end{itemize}
+
+\subsubsection*{Median}
+Middle value if odd number of values, average of middle two values if even number of values
+
+\subsubsection*{Mode}
+Value that occurs most frequently
+
+\subsection*{Symmetric vs Skewed Data}
+\begin{itemize}[noitemsep]
+    \item \textbf{Symmetric}: Data is symmetrically distributed around the mean. The mean, median, and mode are all equal.
+    \item \textbf{Skewed}: Data is not symmetrically distributed around the mean.
+    \begin{itemize}
+        \item \textbf{Left Skewed (Negative)}: Mean $<$ Median $<$ Mode
+        \item \textbf{Right Skewed (Positive)}: Mode $<$ Median $<$ Mean
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Dispersion}
+\begin{itemize}[noitemsep]
+    \item \textbf{Range}: $\text{max}(x) - \text{min}(x)$
+    \item \textbf{Quantile}: At most $n(k/q)$ values will be smaller
+    \item \textbf{IQR}: $Q_3 - Q_1$ (middle 50\% of data)
+    \item \textbf{Outliers}: Values outside $[Q_1 - 1.5 \times \text{IQR}, Q_3 + 1.5 \times \text{IQR}]$
+    \item \textbf{Variance}: $\sigma^2 = \frac{1}{N} \sum_{i=1}^{N} (x_i - \mu)^2$
+    \item \textbf{Standard Deviation}: $\sigma = \sqrt{\sigma^2}$
+\end{itemize}
+
+\subsection*{Data Characteristics}
+\begin{itemize}[noitemsep]
+    \item \textbf{Dimensionality}: Number of variables/features. The curse of dimensionality refers to the exponential increase in data required to densely populate space as the dimension increases.
+    \item \textbf{Sparsity}: Proportion of missing/zero values in the data.
+    \item \textbf{Resolution}: Level of detail or aggregation in the data.
+\end{itemize}
+
+\subsection*{Normal Distribution}
+\begin{itemize}[noitemsep]
+    \item Bell-shaped curve
+    \item $\mu = \bar{x}$
+    \item $\sigma = \sqrt{\frac{1}{N} \sum_{i=1}^{N} (x_i - \mu)^2}$
+    \item \textbf{68-95-99.7 Rule}:
+    \begin{itemize}
+        \item 68\% within $\mu \pm \sigma$
+        \item 95\% within $\mu \pm 2\sigma$
+        \item 99.7\% within $\mu \pm 3\sigma$
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Variable Types}
+\begin{itemize}[noitemsep]
+    \item \textbf{Nominal}: Categories without order (gender, color, zip code)
+    \item \textbf{Ordinal}: Ordered categories (education level, income level)
+    \item \textbf{Interval}: Ordered with equal intervals (temperature in °C, dates)
+    \item \textbf{Ratio}: Interval with true zero (height, weight, age)
+\end{itemize}
+
+\subsection*{Statistical Plots}
+\begin{itemize}[noitemsep]
+    \item \textbf{Boxplot}: Five-number summary (min, Q1, median, Q3, max) and outliers
+    \item \textbf{Histogram}: Shows frequency distribution of numerical data
+    \item \textbf{Quantile Plot}: Plots data against theoretical quantiles (index $f = \frac{i-0.5}{n}$)
+    \item \textbf{Q-Q Plot}: Compares two distributions using their quantiles
+    \item \textbf{Scatter Plot}: Shows relationship between two numerical variables
+\end{itemize}
+
+\subsection*{Outlier Handling}
+\begin{enumerate}[noitemsep]
+    \item Remove if erroneous
+    \item Transform (log, square root)
+    \item Use robust statistics (median, IQR)
+    \item Cap/floor extreme values
+\end{enumerate}
