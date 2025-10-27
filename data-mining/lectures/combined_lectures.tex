@@ -1,10 +1,10 @@
-\documentclass[10pt,oneside]{article}
+\documentclass[8pt,oneside]{extarticle}
+\usepackage[paperheight=11in,paperwidth=8.5in,margin=0.5in,includeheadfoot]{geometry}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{enumitem}
-\usepackage[margin=0.8in]{geometry}
 \usepackage{mdframed}
 \usepackage{xcolor}
 \usepackage[bookmarks=true,pdfstartview=FitH,hidelinks]{hyperref}
@@ -76,6 +76,20 @@
 % Start page numbering after the title page
 \setcounter{page}{1}
 
+% Set very small font size
+\makeatletter
+\renewcommand{\normalsize}{\@setfontsize\normalsize{6}{7.5}}
+\makeatother
+
+\begin{center}
+\large\bfseries Data Mining - Lecture Notes\par
+\small Maastricht University\par
+\tiny \today
+\end{center}
+
+\tableofcontents
+\clearpage
+
 % Lecture 2
 \section{Getting to Know the Data}
 \label{sec:lecture2}
@@ -102,6 +116,20 @@
 \label{sec:lecture5}
 \begin{lecture}{Lecture 5: Classification}
 \input{lecture5.tex}
+\end{lecture}
+
+% Lecture 6
+\section{Feature Selection}
+\label{sec:lecture6}
+\begin{lecture}{Lecture 6: Feature Selection}
+\input{lecture6.tex}
+\end{lecture}
+
+% Lecture 7
+\section{Model Validation}
+\label{sec:lecture7}
+\begin{lecture}{Lecture 7: Model Validation}
+\input{lecture7.tex}
 \end{lecture}
 
 \end{document}

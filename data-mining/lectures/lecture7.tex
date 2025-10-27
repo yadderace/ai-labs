@@ -1,0 +1,100 @@
+\section*{Model Validation}
+
+\subsection*{Confusion Matrix}
+
+How to validate classifier performance? We use the following confusion matrix (table):
+
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Actual/Predicted} & \textbf{Pos} & \textbf{Neg} \\ \hline
+\textbf{Pos} & TP & FP \\ \hline
+\textbf{Neg} & FN & TN \\ \hline
+\end{tabular}
+\end{center}
+
+Where:
+\begin{itemize}
+    \item TP: True Positives
+    \item FP: False Positives
+    \item FN: False Negatives
+    \item TN: True Negatives
+\end{itemize}
+
+\subsection*{Performance Metrics}
+
+\textbf{Accuracy:} 
+$$\text{Accuracy} = \frac{TP + TN}{TP + TN + FP + FN}$$
+
+\textbf{Error Rate:}
+$$\text{Error Rate} = 1 - \text{Accuracy} = \frac{FP + FN}{TP + TN + FP + FN}$$
+
+\textbf{Precision:} 
+$$\text{Precision} = \frac{TP}{TP + FP}$$
+
+\textbf{Recall (Sensitivity, True Positive Rate):}
+$$\text{Recall} = \frac{TP}{TP + FN}$$
+
+\textbf{Specificity (True Negative Rate):}
+$$\text{Specificity} = \frac{TN}{TN + FP}$$
+
+\textbf{F1-Score:}
+$$F_1 = 2 \times \frac{\text{Precision} \times \text{Recall}}{\text{Precision} + \text{Recall}}$$
+
+\subsection*{ROC Curve}
+
+\begin{itemize}
+    \item ROC (Receiver Operating Characteristic) curve plots the True Positive Rate (Sensitivity) against the False Positive Rate (1 - Specificity) at various threshold settings.
+    \item The area under the ROC curve (AUC-ROC) provides an aggregate measure of performance across all possible classification thresholds.
+    \item A model with perfect discrimination has an AUC of 1.0, while a model with no discrimination has an AUC of 0.5 (a diagonal line).
+\end{itemize}
+
+\subsection*{Cross-Validation}
+
+\textbf{K-Fold Cross-Validation:}
+\begin{enumerate}
+    \item Randomly split the dataset into k equal-sized folds (subsets).
+    \item For each fold k:
+    \begin{itemize}
+        \item Use fold k as the validation set.
+        \item Use the remaining k-1 folds as the training set.
+        \item Train the model on the training set and evaluate it on the validation set.
+    \end{itemize}
+    \item Calculate the average performance across all k folds.
+\end{enumerate}
+
+\textbf{Stratified K-Fold:} A variation that preserves the percentage of samples for each class in each fold.
+
+\subsection*{Bias-Variance Tradeoff}
+
+\begin{itemize}
+    \item \textbf{Bias:} Error due to overly simplistic assumptions in the learning algorithm. High bias can cause underfitting.
+    \item \textbf{Variance:} Error due to too much complexity in the learning algorithm. High variance can cause overfitting.
+    \item The goal is to find the right balance between bias and variance to minimize total error.
+\end{itemize}
+
+\subsection*{Regularization}
+
+Regularization techniques help prevent overfitting by adding a penalty term to the loss function:
+
+\textbf{L1 Regularization (Lasso):}
+$$L(\mathbf{w}) = \text{Loss}(\mathbf{w}) + \lambda \sum_{i=1}^n |w_i|$$
+
+\textbf{L2 Regularization (Ridge):}
+$$L(\mathbf{w}) = \text{Loss}(\mathbf{w}) + \lambda \sum_{i=1}^n w_i^2$$
+
+\subsection*{Hyperparameter Tuning}
+
+\textbf{Grid Search:} Exhaustive search over a specified parameter grid.
+
+\textbf{Random Search:} Randomly samples parameter combinations from a distribution.
+
+\textbf{Cross-Validation:} Used to evaluate each hyperparameter combination's performance.
+
+\subsection*{Model Comparison}
+
+\begin{itemize}
+    \item Compare models using appropriate metrics (e.g., accuracy, F1-score, AUC-ROC).
+    \item Use statistical tests (e.g., paired t-test) to determine if differences in performance are statistically significant.
+    \item Consider computational efficiency, interpretability, and other practical aspects.
+\end{itemize}
