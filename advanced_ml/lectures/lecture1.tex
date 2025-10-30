@@ -1,0 +1,170 @@
+\documentclass{article}
+
+% Language setting
+\usepackage[english]{babel}
+
+% Set page size and margins
+% Replace `letterpaper' with `a4paper' for UK/EU standard size
+\usepackage[letterpaper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+% Useful packages
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage{titling} % For subtitle support
+
+\title{Linear Models\\
+\large Advanced Machine Learning}
+\author{Yadder Aceituno}
+
+\begin{document}
+\maketitle
+
+
+\section{Content of Course}
+
+\begin{enumerate}
+    \item Linear or Logistic
+    \item Decision Trees
+    \item SVM
+    \item Neural Networks
+    \item Representational Issues
+    \item Deep Learning
+    \item Gaussian Processes
+\end{enumerate}
+
+\section{Lecture 1: Linear Regression}
+
+\subsection{Linear Regression}
+
+Given a set of data points $<x_i, y_i>$, the goal is to find the weights 
+$\theta$ such that $X_i \theta = Y_i$.
+
+Where:
+
+$$X = \langle 1, x_1, x_2, \ldots, x_m \rangle$$
+$$Y =  \theta_0 + \theta_1 x_1 + \theta_2 x_2 + \ldots + \theta_m x_m$$
+
+\subsection{Maximum Likelihood Estimation}
+
+Assuming that data points are independent and identically distributed, 
+the goal is to find the parameters $\theta$ that maximize the likelihood 
+of the data with the next equation:
+$$
+\theta = argmax_{\theta_0, \theta_1, \ldots, \theta_m} \prod_{i=1}^{N} p(y_i | x_i; \theta)
+$$
+
+
+Where 
+$$
+p(y_i | x_i; \theta) = \frac{1}{\sqrt{2\pi \sigma^2}} e^{-\frac{(y_i - \mu_i)^2}{2\sigma^2}}
+$$
+$$
+\mu_i = \theta_0 + \theta_1 x_1 + \theta_2 x_2 + \ldots + \theta_m x_m
+$$
+
+If we assume that the data points are independent and identically distributed, 
+then the probability of observing all data points is the product of their 
+individual probabilities. This is the joint likelihood. This method can derive into the Mean Squared Error (MSE). This can be proven
+as follows:
+
+Because it's equivalent to maximize the likelihood, we can maximize the log-likelihood:
+
+$$
+\theta = argmax_{\theta_0, \theta_1, \ldots, \theta_m} \log \left( \prod_{i=1}^{N} p(y_i | x_i; \theta) \right)
+$$
+
+Because the logaritm of a product is the sum of the logaritms, we can rewrite the equation as:
+$$
+\theta = argmax_{\theta_0, \theta_1, \ldots, \theta_m} \sum_{i=1}^{N} \log p(y_i | x_i; \theta)
+$$
+
+Further we can transform the product in the logaritm into a sum of logaritms:
+$$
+\theta = argmax_{\theta_0, \theta_1, \ldots, \theta_m} \sum_{i=1}^{N} \log \left( \frac{1}{\sqrt{2\pi \sigma^2}} \right) + \log \left( e^{-\frac{(y_i - \mu_i)^2}{2\sigma^2}} \right)
+$$
+
+Here, the first term in the sum is a constant that doesn't depend on $\theta$, so it can be ignored.
+In the second term, the logaritm of the exponential is the exponential itself, so we can rewrite the equation as:
+$$
+\theta = argmax_{\theta_0, \theta_1, \ldots, \theta_m} \sum_{i=1}^{N} -\frac{(y_i - \mu_i)^2}{2\sigma^2}
+$$
+
+Which is the same as minimizing the Mean Squared Error (MSE).
+
+\subsection{Normal Equation}
+
+Method to find the optimal parameters.
+The equation is: $\theta = (X^T X)^{-1} X^T y$
+Minimaze the new cost function: $J(\theta) = \frac{1}{2m} (X \theta - y)^T (X \theta - y)$
+
+\subsection{Gradient Descent}
+
+Method to find the optimal parameters. 
+Start with random parameters and iteratively update them to minimize the cost function.
+Keep changing the parameters until the cost function is minimized.
+The equation to repeat until convergence is: 
+$$
+\theta_j := \theta_j - \alpha \frac{1}{m} \sum_{i=1}^{m} (h_\theta(x_i) - y_i) x_{ij}
+$$
+
+Where $\alpha$ is the learning rate.
+And $x_{ij}$ is the $j$-th feature of the $i$-th training example.
+There's an strategy where the learning rate can start with a high 
+value and then decrease over time.
+
+Some strategies:
+\begin{itemize}
+    \item Batch Gradient Descent
+    \item Stochastic Gradient Descent (SGD)
+    \item Mini-batch Gradient Descent
+\end{itemize}
+
+\subsection{Learning rate}
+
+If the learning rate is too small, the algorithm will take a long time to converge.
+If the learning rate is too large, the algorithm may not converge.
+
+\subsection{Overfitting}
+
+High number of features means high number of heights
+\begin{itemize}
+    \item Reduce the number of features
+    \item Regularization
+\end{itemize}
+
+\section{Logistic Regression}
+
+Cast a binary classification problem as a regression problem. It uses the sigmoid function to map the output to a probability.
+
+Sigmoid function: $\sigma(z) = \frac{1}{1 + e^{-z}}$
+
+Cost function: 
+$$
+Cost(h_\theta(x), y) = -y \log(h_\theta(x)) - (1 - y) \log(1 - h_\theta(x))
+$$
+
+
+\section{Regression as a shallow network}
+Same math as modern
+
+Summary: 
+- Linear Regression: $h_\theta(x) = \theta_0 + \theta_1 x$
+- Logistic Regression: $h_\theta(x) = \sigma(\theta_0 + \theta_1 x)$
+- Softmax regression vs k-binary classifiers
+
+
+
+Lecture 2
+
+Bias per layer or per input (neuron)
+
+Random for weights is important because if no the neurons will behave the same.
+
+* element wise product (operation between two matrices of the same size)
+
+Hopfield Network
+- Binary Units
+- Symmetric Connections
+- Energy Function
+\end{document}
