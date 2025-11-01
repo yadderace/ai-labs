@@ -1,28 +1,16 @@
 
 import numpy as np
 
-class Loss:
-    def calculate(self, y, y_hat):
-        sample_losses = self.forward(y, y_hat)
-        data_loss = np.mean(sample_losses)
-        return data_loss
-
-class LossCategoricalEntropy(Loss):
-    def forward(self, y, y_hat):
-        samples = len(y)
-        # This is to avoid log(0)
-        y_hat_clipped = np.clip(y_hat, 1e-7, 1 - 1e-7)
-
-        correct_confidences = np.sum(y_hat_clipped * y, axis=1)
-
-        negative_log_likelihoods = -np.log(correct_confidences)
-        return negative_log_likelihoods
-
-        
-
 class MyNeuralNetwork:
 
-    def __init__(self, input_size, hidden_size, output_size):
+    def __init__(
+        self, 
+        input_size = 8, 
+        hidden_size = 3, 
+        output_size = 8, 
+        loss_function = 'cross_entropy',
+        output_file = 'statistics.csv'
+    ):
         
         # Generating the weights
         self.weights_input_hidden = np.random.randn(input_size, hidden_size)
@@ -32,66 +20,85 @@ class MyNeuralNetwork:
         self.bias_input_hidden = np.zeros((1, hidden_size))
         self.bias_hidden_output = np.zeros((1, output_size))
 
-    def relu(self, x):
-        return np.maximum(0, x)
+        # Defining the output file for the statistics
+        self.output_file = output_file
 
-    def relu_derivative(self, x):
-        return np.where(x > 0, 1, 0)
+    def sigmoid(self, x):
+        return 1 / (1 + np.exp(-x))
+
+    def sigmoid_derivative(self, x):
+        return x * (1 - x)
 
     def softmax(self, x):
         exp_x = np.exp(x - np.max(x, axis=1, keepdims=True))
         return exp_x / np.sum(exp_x, axis=1, keepdims=True)
 
-
     def forward(self, X):
         
         # Calculating the hidden layer
-        self.hidden_layer = self.relu(np.dot(X, self.weights_input_hidden) + self.bias_input_hidden)
+        self.hidden_layer = self.sigmoid(np.dot(X, self.weights_input_hidden) + self.bias_input_hidden)
         # Calculating the output layer
-        self.output_layer = self.softmax(np.dot(self.hidden_layer, self.weights_hidden_output) + self.bias_hidden_output)
+        self.output_layer = self.sigmoid(np.dot(self.hidden_layer, self.weights_hidden_output) + self.bias_hidden_output)
         
         return self.output_layer
 
     def backward(self, X, y, y_hat, learning_rate = 0.01):
         m = X.shape[0]
 
-        # Output layer error
-        output_error = y_hat - y
-        d_weights2 = np.dot(self.hidden_layer.T, output_error) / m
-        d_bias2 = np.sum(output_error, axis=0, keepdims=True) / m
+        # ================================= [Output layer error] =================================
+        # For loss function we use MSE
+        # The loss function derivative with respect to the predicted values y_hat
+        l_derivative = y_hat - y
+        # The derivative of the predicted values with respect to z (W * X + b)
+        # is the derivative of sigmoid
+        sigmoid_derivative = self.sigmoid_derivative(y_hat) 
+        # The derivative of the loss function with respect to z 
+        # is the product of the loss function derivative and the sigmoid derivative
+        # This is the error term
+        error_term_output = l_derivative * sigmoid_derivative
+
+        # The derivative of the loss function with respect to weights
+        # is the product of the error term and the hidden layer
+        # and then we divide by the number of samples
+        dW_hidden_output = np.dot(self.hidden_layer.T, error_term_output) / m
+        # The derivative of the loss function with respect to bias
+        # is the sum of the error term
+        # and then we divide by the number of samples
+        db_hidden_output = np.sum(error_term_output, axis=0, keepdims=True) / m
+
+        # ================================= [Hidden layer error] =================================
+        # The derivative of the loss function with respect to weights
         
-        # Hidden layer error
-        hidden_error = np.dot(output_error, self.weights_hidden_output.T) * self.relu_derivative(self.hidden_layer)
-        d_weights1 = np.dot(X.T, hidden_error) / m
-        d_bias1 = np.sum(hidden_error, axis=0, keepdims=True) / m
-        
+        error_term_hidden = np.dot(error_term_output, self.weights_hidden_output.T) * self.sigmoid_derivative(self.hidden_layer)
+
+        # The derivative of the loss function with respect to weights
+        dW_input_hidden = np.dot(X.T, error_term_hidden) / m
+        # The derivative of the loss function with respect to bias
+        db_input_hidden = np.sum(error_term_hidden, axis=0, keepdims=True) / m
+
+        # ================================= [Update weights and biases] ==========================
         # Update weights and biases
-        self.weights_hidden_output -= learning_rate * d_weights2
-        self.bias_hidden_output -= learning_rate * d_bias2
-        self.weights_input_hidden -= learning_rate * d_weights1
-        self.bias_input_hidden -= learning_rate * d_bias1
+        self.weights_hidden_output -= learning_rate * dW_hidden_output
+        self.bias_hidden_output -= learning_rate * db_hidden_output
 
-
-    def train(self, X, y, epochs=1000, learning_rate=0.05):
+        self.weights_input_hidden -= learning_rate * dW_input_hidden
+        self.bias_input_hidden -= learning_rate * db_input_hidden
+        
+    def train(self, X, y, epochs=1000, learning_rate=1.0):
         
         for epoch in range(epochs):
             y_hat = self.forward(X)
             self.backward(X, y, y_hat, learning_rate)
 
             if epoch % 100 == 0:
-                loss_function = LossCategoricalEntropy()
-                loss = loss_function.calculate(y, y_hat)
-                print(f"Loss: {loss}")
+                # Calculating the loss (MSE)
+                loss = np.sum((y_hat - y) ** 2) / (2 * X.shape[0])
+                print(f"Epoch {epoch}, Loss: {loss}")
 
                 # Calculating the accuracy
                 predictions = np.argmax(y_hat, axis=1)
                 accuracy = np.mean(predictions == np.argmax(y, axis=1))
                 print(f"Accuracy: {accuracy}")
-
-        
-
-
-        
      
 
 def main():
