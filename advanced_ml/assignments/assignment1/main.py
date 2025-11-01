@@ -1,5 +1,6 @@
 
 import numpy as np
+import csv
 
 class MyNeuralNetwork:
 
@@ -23,6 +24,22 @@ class MyNeuralNetwork:
         # Defining the output file for the statistics
         self.output_file = output_file
 
+        # Initialize log file
+        self.initialize_log_file()
+
+    def initialize_log_file(self):
+        # Create headers for the CSV file
+        headers = ['epoch', 'loss', 'accuracy']
+        
+        # Add columns for each hidden neuron's Z and activation
+        for i in range(self.weights_input_hidden.shape[1]):  # For each hidden neuron
+            headers.extend([f'z_hidden_{i}', f'a_hidden_{i}'])
+        
+        # Write headers to file
+        with open(self.output_file, 'w', newline='') as f:
+            writer = csv.writer(f)
+            writer.writerow(headers)
+
     def sigmoid(self, x):
         return 1 / (1 + np.exp(-x))
 
@@ -33,14 +50,31 @@ class MyNeuralNetwork:
         exp_x = np.exp(x - np.max(x, axis=1, keepdims=True))
         return exp_x / np.sum(exp_x, axis=1, keepdims=True)
 
+    def log_training_step(self, epoch, loss, accuracy, hidden_z, hidden_activations):
+        # Prepare row data
+        row = [epoch, loss, accuracy]
+        # Add Z and activation for each hidden neuron
+        for z, a in zip(hidden_z[0], hidden_activations[0]):
+            row.extend([z, a])
+        
+        # Append to CSV
+        with open(self.output_file, 'a', newline='') as f:
+            writer = csv.writer(f)
+            writer.writerow(row)
+
     def forward(self, X):
         
         # Calculating the hidden layer
-        self.hidden_layer = self.sigmoid(np.dot(X, self.weights_input_hidden) + self.bias_input_hidden)
+        # Store Z values
+        self.z_hidden = np.dot(X, self.weights_input_hidden) + self.bias_input_hidden
+        # Calculate activation
+        self.hidden_layer = self.sigmoid(self.z_hidden)
+
         # Calculating the output layer
-        self.output_layer = self.sigmoid(np.dot(self.hidden_layer, self.weights_hidden_output) + self.bias_hidden_output)
+        self.z_output = np.dot(self.hidden_layer, self.weights_hidden_output) + self.bias_hidden_output
+        self.output_layer = self.sigmoid(self.z_output)
         
-        return self.output_layer
+        return self.output_layer, self.z_hidden
 
     def backward(self, X, y, y_hat, learning_rate = 0.01):
         m = X.shape[0]
@@ -84,21 +118,32 @@ class MyNeuralNetwork:
         self.weights_input_hidden -= learning_rate * dW_input_hidden
         self.bias_input_hidden -= learning_rate * db_input_hidden
         
-    def train(self, X, y, epochs=1000, learning_rate=1.0):
+    def train(self, X, y, epochs=10000, learning_rate=0.01):
         
         for epoch in range(epochs):
-            y_hat = self.forward(X)
+            # Forward pass
+            y_hat, z_hidden = self.forward(X)
+
             self.backward(X, y, y_hat, learning_rate)
 
             if epoch % 100 == 0:
-                # Calculating the loss (MSE)
+                # Calculate metrics
                 loss = np.sum((y_hat - y) ** 2) / (2 * X.shape[0])
-                print(f"Epoch {epoch}, Loss: {loss}")
-
-                # Calculating the accuracy
                 predictions = np.argmax(y_hat, axis=1)
                 accuracy = np.mean(predictions == np.argmax(y, axis=1))
-                print(f"Accuracy: {accuracy}")
+                
+                # Log to console
+                print(f"Epoch {epoch}, Loss: {loss:.4f}, Accuracy: {accuracy:.4f}")
+            
+            # Log to CSV
+            self.log_training_step(
+                epoch=epoch,
+                loss=loss,
+                accuracy=accuracy,
+                hidden_z=z_hidden,
+                hidden_activations=self.hidden_layer
+            )
+                
      
 
 def main():
@@ -128,7 +173,7 @@ def main():
     ])
 
     nn = MyNeuralNetwork(input_size=input_size, hidden_size=hidden_size, output_size=output_size)
-    nn.train(X, y)
+    nn.train(X, y, epochs=10000, learning_rate=0.2)
     
 
 if __name__ == "__main__":
