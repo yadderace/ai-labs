@@ -1,0 +1,89 @@
+\documentclass{article}
+
+% Language setting
+\usepackage[english]{babel}
+
+% Set page size and margins
+% Replace `letterpaper' with `a4paper' for UK/EU standard size
+\usepackage[letterpaper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+% Useful packages
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+\title{Socioeconomic reorganization of communication and mobilitynetworks in response to external shocks}
+\author{Yadder Aceituno}
+
+\begin{document}
+\maketitle
+
+
+\section{Summary Notes}
+
+\subsection{Context}
+
+External shocks, such as lockdowns, can lead to a reorganization of socioeconomic segregation 
+patterns. The study was made in Sierra Leone. 
+
+During lockdown, people physically stayed apart (more segregation in mobility), 
+but socially they connected more widely across groups (less segregation in communication).
+
+People tend to cluster with others who are similar to them in one or more traits, and this natural 
+tendency creates patterns of segregation. The Socioeconomic Status (SES) is a key factor in this 
+tendency.
+
+People have different levels of wealth and social status, and these differences cause inequalities 
+in many parts of life.
+
+Segregation patterns are generally stable over time, but they can change in response to external shocks.
+COVID-19 lockdowns are an example of such a shock. During lockdown, wealthier people adjusted their 
+mobility patterns more easily (avoiding public transport, for example) than poorer people.
+
+Because poorer people had fewer resources and less access to information, they were more exposed to the virus and 
+suffered worse health outcomes, including higher death rates, during the pandemic. The question of the study was: 
+
+\textbf{How did these abrupt behavioral changes and differences in adjustment capacities 
+reorganize the social and mobility networks of people in the short terms?}
+
+\subsection{Results}
+
+Using the mobile phone call dataset, the authors studied from March 17, 2020 to April 17, 2020 (one month).
+
+As a proxy for SES, first they assigned a RWI to each phone tower and with this they inferred the SES of each user.
+With this location inference, they found that it was strong correlated with the actual population density distribution.
+Demostrating that mobile phone users are representative of the population.
+
+Then a social network $G_s$ was build where nodes are users and edges are time-varying communcation interactions between the users.
+
+A mobility network $G_m$ was also built where nodes represent their homes and edges their visiting patterns.
+
+Segregation patterns can be measured using the assortativity coefficient and can be clearly visualized using the 
+assortativity matrix that shows the correlation between the SES of the nodes. The assortativity coefficient is:
+
+$$
+    \rho = \frac{\sum_{i,j} (x_i - \bar{x})(y_j - \bar{y})}{\sqrt{\sum_{i,j} (x_i - \bar{x})^2 \sum_{i,j} (y_j - \bar{y})^2 }}
+$$
+
+If $\rho = 1$ then the nodes are perfectly assortative, 
+if $\rho = -1$ then the nodes are perfectly disassortative.
+
+The lockdown had radial effects on the social networks
+
+\section{Questions}
+
+\begin{itemize}
+    \item From a technical perspective, what attributes can be used to determine SES?
+    
+    Places of residence, income, education level, job type, etc.
+    
+    \item This study was done in Sierra Leone, can we apply the same analysis to other countries?
+    
+    \item How did they assigned a tower to each user?
+    
+    \item How did they capture when a user moved to a different place, it was necessary that users make a call?
+\end{itemize}
+
+
+
+\end{document}
