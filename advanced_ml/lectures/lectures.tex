@@ -33,7 +33,7 @@
     \item Gaussian Processes
 \end{enumerate}
 
-\section{Lecture 1: Linear Regression}
+\section{Week 1 - Lecture 1}
 
 \subsection{Linear Regression}
 
@@ -185,6 +185,39 @@ High number of features means high number of heights
     \item Regularization
 \end{itemize}
 
+\subsection{Regularization}
+
+Imagine you train a linear regression model, but your model fits too closely to your 
+training data — it starts capturing noise instead of the real underlying pattern.
+That's called overfitting:
+
+\begin{itemize}
+    \item Good on training data
+    \item Poor on new (unseen) data
+\end{itemize}
+
+Overfitting often happens when:
+\begin{itemize}
+    \item You have too many features relative to your number of examples.
+    \item Some features are highly correlated or not informative.
+\end{itemize}
+
+\textbf{Regularization} is a technique to discourage complexity in the model by adding a 
+penalty to the cost function. This penalty term shrinks the coefficients $\theta_j$, keeping them smaller and 
+preventing the model from depending too heavily on any single feature.
+
+The cost function for linear regression with regularization is:
+$$
+J(\theta) = \frac{1}{2m} \sum_{i=1}^{m} (h_\theta(x_i) - y_i)^2 + \frac{\lambda}{2m} \sum_{j=1}^{n} \theta_j^2
+$$
+
+In matrix form:
+$$
+J(\theta) = \frac{1}{2m} \left[ (X \theta - y)^T (X \theta - y) + \lambda \theta^T \theta \right]
+$$
+
+Where $\lambda$ is the regularization parameter.
+
 \section{Logistic Regression}
 
 Cast a binary classification problem as a regression problem. It uses the sigmoid function to map the output to a probability.
@@ -207,16 +240,46 @@ Summary:
 
 
 
-Lecture 2
+\section{Week 1 - Lecture 2}
 
-Bias per layer or per input (neuron)
+Neural networks have the same math as linear regression. There are different network architectures:
 
-Random for weights is important because if no the neurons will behave the same.
+\begin{itemize}
+    \item Multiple hidden layers, also called multilayer perceptron
+    \item Recurrent networks, which gives a memory to the network
+\end{itemize}
 
-* element wise product (operation between two matrices of the same size)
+For learning the weights, we use gradient descent similar to linear regression.
 
-Hopfield Network
-- Binary Units
-- Symmetric Connections
-- Energy Function
+For calculating the error in each neuron, we use the same cost function as in linear regression.
+For linear regression with a sigmoid activation function, the cost function is:
+$$
+J(\theta) = \frac{1}{2m} \sum_{i=1}^{m} (h_\theta(x_i) - y_i)^2 
+$$
+
+For updating the weights, we use gradient descent:
+$$
+\theta_j := \theta_j - \alpha \frac{ \partial J(\theta)}{\partial \theta_j}
+$$
+
+Here, the error term is calculated with the next function:
+
+$$
+\delta_j = (h_\theta(x_i) - y_i)
+$$
+
+\subsection{Hopfield Network}
+
+This is a network where the neurons interact with each other in a symmetric way. It means 
+that weights are the same for both directions.
+
+Every neuron updates its state based on the states of its neighbors. This is done iteratively,
+one neuron at a time. The function that updates the state of a neuron is:
+
+$$
+    s_i = \sum_{j=1}^{n} w_{ij} s_j - \theta_i
+$$
+
+
+
 \end{document}
