@@ -47,13 +47,89 @@ $$ u $$ and $$ v $$ are the endpoints of the edge and are said to be adjacent.
 
 The max number of edges in a graph is $$ |E| = \binom{|V|}{2} $$.
 
-Neighbor Set
+Lecture 2
 
-How to represent a graph?
+How do we represent a graph?
 
-Multiedges
+- Visual
+- Adjacency matrix
+- Edge List (This is most common in projects)
 
-Self-edges
+Types of networks:
+
+- Undirected, simple
+- Directed: also called
+- Network with self-edges
+- Multiedges
+- Weighted graphs
+- Hypergraphs
+- Trees
+- Bipartite networks
+- Planar networks
+
+There are two types of transformation from Undirected to Directed:
+
+- Co-citation networks
+- Bibliographic coupling networks
+
+Degree of a node: number of edges incident to it.
+
+Regular graph: all nodes have the same degree.
+
+Vertex degree for directed graph
+
+
+Forbidden Triad
+
+
+------- Lecture 5
+
+What do we know so far?
+
+- A netfork is defined by a collection of nodes and edges
+- There are different types of networks
+- There are different network models
+    - Erdős–Rényi Random graph
+    - Barabási-Albert model
+    - Watts-Strogatz model
+- We have some network metrics for the nodes
+    - Clustering Coefficient
+    - Node Degree
+- We have some network metrics for the network
+    - Average Path Length
+    - Average Shortest Path Length
+    - Avg Clustering Coefficient
+    - Density
+    - Singleton
+    - Degree Distribution
+    - Diameter: Largest shortest path length
+- How do we compare nodes?
+    - Clustering Coefficient
+    - Node Degree
+    - Node Betweenness Centrality
+    
+
+Betweenness Centrality: 
+Extent that a node lies on the shortest path between other nodes.
+$$ X_i = \sum_{s \neq i \neq t} \frac{\sigma_{st}(i)}{\sigma_{st}} $$
+
+Degree Centrality: 
+The importance of a node is a function of the importance of its neighbors.
+
+Kotz Centrality: 
+$$ X_i = \sum_{j \in N(i)} X_j $$
+
+Page Route
+
+
+Closeness Centrality: 
+$$ X_i = \frac{1}{\sum_{j \in N(i)} d_{ij}} $$
+
+
+Similarity
+    - Structural equivalence: nodes sharing same neighbords
+    - Regultar equivalence: nodes sharing neighbors that are similar
+    
 
 \end{document}
 
