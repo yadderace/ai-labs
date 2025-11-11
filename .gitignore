@@ -45,5 +45,9 @@ __pycache__/
 .LSOverride
 
 
-# CSVs
+# Data
 advanced_ml/assignments/assignment1/*.csv
+advanced_ml/assignments/assignment2/data/
+
+# Envs
+advanced_ml/assignments/assignment2/venv-assignment2
