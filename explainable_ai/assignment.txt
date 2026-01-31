@@ -1,0 +1,28 @@
+Team: Explainable Agents
+
+Members: 
+
+- Yannick Seegers
+i6458368
+
+- Pepijn van der Meer
+i6244643
+
+- Lara Minnebreuker
+i6433943
+
+- Aedem Bangerter
+i6294359
+
+- Luuk Janssen
+i6413546
+
+- Yadder Aceituno 
+i6382150
+
+Dataset: The German credit score (AIF360, OpenML dataset 31)
+URL Dataset: https://archive.ics.uci.edu/dataset/144/statlog+german+credit+data
+
+For this project we use the German Credit dataset to develop a predictive model designed to simulate a scoring scenario. 
+We aim to demonstrate how a model can be created in favor of specific demographics while maintaining a superficial 
+appearance of fairness. By applying Explainable AI (XAI) techniques, we will then expose the latent biases tied to sensitive characteristics.
