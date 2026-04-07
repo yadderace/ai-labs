@@ -55,3 +55,6 @@ network-science/assignments/assignment2/data/
 
 # Envs
 advanced_ml/assignments/assignment2/venv-assignment2
+
+# Java
+*.java
