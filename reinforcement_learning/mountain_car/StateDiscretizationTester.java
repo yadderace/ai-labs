@@ -5,23 +5,19 @@ public class StateDiscretizationTester {
     private static final int POS_BINS = 400;
     private static final int VEL_BINS = 400;
     private static double[][] valueTable = new double[POS_BINS][VEL_BINS];
-    private static final double MIN_POS = -1.2;
-    private static final double MAX_POS = 0.6;
-    private static final double MIN_SPEED = -0.07;
-    private static final double MAX_SPEED = 0.07;
 
     private static int discretizePosition(double position) {
         // Maps from MIN_POS to MAX_POS to 0 to POS_BINS-1
-        double normalized = (position - MIN_POS) /
-                (MAX_POS - MIN_POS);
+        double normalized = (position - MountainCarEnv.MIN_POS) /
+                (MountainCarEnv.MAX_POS - MountainCarEnv.MIN_POS);
         int bin = (int) (normalized * POS_BINS);
         return bin;
     }
 
     private static int discretizeVelocity(double velocity) {
         // Maps from MIN_SPEED to MAX_SPEED to 0 to VEL_BINS-1
-        double normalized = (velocity - MIN_SPEED) /
-                (MAX_SPEED - MIN_SPEED);
+        double normalized = (velocity - MountainCarEnv.MIN_SPEED) /
+                (MountainCarEnv.MAX_SPEED - MountainCarEnv.MIN_SPEED);
         int bin = (int) (normalized * VEL_BINS);
         return bin;
     }
