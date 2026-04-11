@@ -63,6 +63,16 @@ public class DPAgent {
         policy = new int[POS_BINS][VEL_BINS];
         gamestate = game.randomReset();
         valueIteration();
+
+        try {
+            HeatMapWindow hm = new HeatMapWindow(vValues);
+            hm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            hm.setSize(600, 600);
+            hm.setVisible(true);
+            hm.update(vValues);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public static void valueIteration() {
