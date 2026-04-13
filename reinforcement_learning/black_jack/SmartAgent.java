@@ -17,7 +17,6 @@ public class SmartAgent {
         // Create game environment with rendering
         game = new BlackJackEnv(BlackJackEnv.RENDER);
 
-        // Track statistics
         int totalGames = 20;
         int wins = 0;
         int losses = 0;
@@ -114,14 +113,13 @@ public class SmartAgent {
         double[] qValues = qTable.get(stateKey);
 
         if (qValues == null) {
-            System.err.println("  [State not in Q-table, using default strategy]");
-            System.err.println("  [Missing state: " + stateKey + "]");
+            System.err.println("  State not in Q-table");
             System.exit(1);
         }
         int bestAction = (qValues[0] > qValues[1]) ? BlackJackEnv.STAND : BlackJackEnv.HIT;
 
-        System.out.println("  [Q-values: HIT=" + String.format("%.2f", qValues[0]) +
-                ", STAND=" + String.format("%.2f", qValues[1]) + "]");
+        System.out.println(
+                "Q-values: HIT=" + String.format("%.2f", qValues[0]) + ", STAND=" + String.format("%.2f", qValues[1]));
 
         return bestAction;
     }

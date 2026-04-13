@@ -1,5 +1,4 @@
 import javax.swing.*;
-import java.util.Arrays;
 
 public class DPAgent {
 
@@ -64,6 +63,10 @@ public class DPAgent {
         gamestate = game.randomReset();
         valueIteration();
 
+        // Execute episodes using the learned policy
+        game = new MountainCarEnv(MountainCarEnv.RENDER);
+        executeLearnedPolicy(10);
+
         try {
             HeatMapWindow hm = new HeatMapWindow(vValues);
             hm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -112,6 +115,47 @@ public class DPAgent {
 
         System.out.println("Value Iteration converged after " + iteration + " iterations.");
 
+    }
+
+    public static void executeLearnedPolicy(int numEpisodes) {
+        System.out.println("\nExecuting learned policy for " + numEpisodes + " episodes...\n");
+
+        for (int episode = 0; episode < numEpisodes; episode++) {
+            gamestate = game.randomReset();
+            double position = gamestate[2];
+            double velocity = gamestate[3];
+            int steps = 0;
+            double totalReward = 0;
+
+            System.out.println("Episode " + (episode + 1) + " starting at position: " + position);
+
+            while (gamestate[0] == 0) { // While goal not reached
+
+                // Get current state bins
+                int posBin = discretizePosition(position);
+                int velBin = discretizeVelocity(velocity);
+
+                // Select action from learned policy
+                int action = policy[posBin][velBin];
+
+                // Take action
+                gamestate = game.step(action);
+                position = gamestate[2];
+                velocity = gamestate[3];
+                totalReward += gamestate[1];
+                steps++;
+
+            }
+
+            if (gamestate[0] == 1) {
+                System.out.println(
+                        "Episode " + (episode + 1) + " succeeded! Steps: " + steps + ", Total Reward: " + totalReward);
+            } else {
+                System.out.println("Episode " + (episode + 1) + " failed to reach goal.");
+            }
+        }
+
+        System.out.println("\nFinished executing policy.\n");
     }
 
     private static double getExpectedValue(double position, double velocity, int action) {
