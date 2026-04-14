@@ -5,7 +5,7 @@ public class DPAgent {
     private static MountainCarEnv game;
     private static double[] gamestate;
     private static double[][] vValues;
-    private static int[][] policy;
+    private static double[][] policy;
 
     private static final int POS_BINS = 400;
     private static final int VEL_BINS = 400;
@@ -59,7 +59,7 @@ public class DPAgent {
     public static void main(String[] args) {
         game = new MountainCarEnv(MountainCarEnv.NONE);
         vValues = new double[POS_BINS][VEL_BINS];
-        policy = new int[POS_BINS][VEL_BINS];
+        policy = new double[POS_BINS][VEL_BINS];
         gamestate = game.randomReset();
         valueIteration();
 
@@ -68,11 +68,11 @@ public class DPAgent {
         executeLearnedPolicy(10);
 
         try {
-            HeatMapWindow hm = new HeatMapWindow(vValues);
+            HeatMapWindow hm = new HeatMapWindow(vValues, policy);
             hm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             hm.setSize(600, 600);
             hm.setVisible(true);
-            hm.update(vValues);
+            hm.update(vValues, policy);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -136,7 +136,7 @@ public class DPAgent {
                 int velBin = discretizeVelocity(velocity);
 
                 // Select action from learned policy
-                int action = policy[posBin][velBin];
+                int action = (int) policy[posBin][velBin];
 
                 // Take action
                 gamestate = game.step(action);
