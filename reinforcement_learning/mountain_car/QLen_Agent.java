@@ -30,7 +30,6 @@ public class QLen_Agent {
         game = new MountainCarEnv(MountainCarEnv.NONE);
 
         QLen_Agent agent = new QLen_Agent();
-        agent.train(EPISODES);
         agent.train(QLen_Agent.EPISODES);
 
         agent.executePolicy(5, true);
